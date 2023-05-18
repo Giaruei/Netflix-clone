@@ -2,7 +2,7 @@
  * @Author: 前端天才蔡嘉睿
  * @Date: 2023-05-17 10:55:46
  * @LastEditors: Giaruei 247658354@qq.com
- * @LastEditTime: 2023-05-18 10:22:24
+ * @LastEditTime: 2023-05-18 11:14:46
  * @FilePath: \netflix-clone\components\Billboard.tsx
  * @Description:
  */
