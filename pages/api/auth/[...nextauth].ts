@@ -2,7 +2,7 @@
  * @Author: 前端天才蔡嘉睿
  * @Date: 2023-05-16 15:04:25
  * @LastEditors: Giaruei 247658354@qq.com
- * @LastEditTime: 2023-05-16 16:52:47
+ * @LastEditTime: 2023-05-17 21:45:10
  * @FilePath: \netflix-clone\pages\api\auth\[...nextauth].ts
  * @Description:
  */
@@ -13,7 +13,6 @@ import Credentials from "next-auth/providers/credentials";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import { compare } from "bcrypt";
 import prismadb from "../../../lib/prismadb";
-
 export const authOptions: AuthOptions = {
 	providers: [
 		GithubProvider({
@@ -78,6 +77,7 @@ export const authOptions: AuthOptions = {
 };
 
 export default NextAuth(authOptions);
+
 // import NextAuth from "next-auth/next";
 // import Credentials from "next-auth/providers/credentials";
 // import prismadb from "../../../lib/prismadb";

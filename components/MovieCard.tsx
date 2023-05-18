@@ -3,19 +3,23 @@
  * @Author: 前端天才蔡嘉睿
  * @Date: 2023-05-17 14:22:55
  * @LastEditors: Giaruei 247658354@qq.com
- * @LastEditTime: 2023-05-17 17:04:27
+ * @LastEditTime: 2023-05-17 22:55:13
  * @FilePath: \netflix-clone\components\MovieCard.tsx
  * @Description:
  */
 import React from "react";
 import { BsFillPlayFill } from "react-icons/bs";
 import FavoriteButton from "./FavoriteButton";
+import { MovieInterFace } from "../types";
+import { useRouter } from "next/router";
 
 interface MovieCardProps {
-	data: Record<string, any>;
+	// data: Record<string, any>;
+	data: MovieInterFace;
 }
 
 const MovieCard: React.FC<MovieCardProps> = ({ data }) => {
+	const router = useRouter();
 	return (
 		<div className="group bg-zinc-900 col-span relative h-[12vw]">
 			<img
@@ -33,7 +37,7 @@ const MovieCard: React.FC<MovieCardProps> = ({ data }) => {
 					<div className="flex flex-row items-center gap-3">
 						<div
 							className="cursor-pointer w-6 h-6 lg:w-10 lg:h-10 bg-white rounded-full flex justify-center items-center transition hover:bg-neutral-300"
-							onClick={() => {}}
+							onClick={() => router.push(`/watch/${data?.id}`)}
 						>
 							<BsFillPlayFill size={30} />
 						</div>
