@@ -1,60 +1,69 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
-  // previewFeatures = ["mongoDb"]
 }
 
 datasource db {
-  provider = "mongodb"
-  url      = env("DATABASE_URL")
+  provider     = "mysql"
+  url          = env("DATABASE_URL")
+  relationMode = "prisma"
 }
 
 model User {
-  id             String    @id @default(auto()) @map("_id") @db.ObjectId
+  id             String     @id @default(uuid())
   name           String
   image          String?
-  email          String?   @unique
+  email          String?    @unique
   emailVerified  DateTime?
   hashedPassword String?
-  createdAt      DateTime  @default(now())
-  updatedAt      DateTime  @updatedAt
-  favoriteIds    String[]  @db.ObjectId
+  createdAt      DateTime   @default(now())
+  updatedAt      DateTime   @updatedAt
+  favoriteIds    Favorite[]
   sessions       Session[]
   accounts       Account[]
 }
 
+model Favorite {
+  id         String @id @default(uuid())
+  userId     String
+  favoriteId String
+  User       User   @relation(fields: [userId], references: [id])
+
+  @@unique([userId, favoriteId])
+}
+
 model Account {
-  id                String  @id @default(auto()) @map("_id") @db.ObjectId
-  userId            String  @db.ObjectId
+  id                String  @id @default(uuid())
+  userId            String
   type              String
   provider          String
   providerAccountId String
-  refresh_token     String? @db.String
-  access_token      String? @db.String
+  refresh_token     String?
+  access_token      String?
   expires_at        Int?
   token_type        String?
   scope             String
-  id_token          String? @db.String
+  id_token          String?
   session_state     String?
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
+  @@index([userId])
 }
 
 model Session {
-  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  id           String   @id @default(uuid())
   sessionToken String   @unique
-  userId       String   @db.ObjectId
+  userId       String
   expired      DateTime
 
   User User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
 }
 
 model VerificationToken {
-  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  id         String   @id @default(uuid())
   identifier String
   token      String   @unique
   expires    DateTime
@@ -63,7 +72,7 @@ model VerificationToken {
 }
 
 model Movie {
-  id           String @id @default(auto()) @map("_id") @db.ObjectId
+  id           String @id @default(uuid())
   title        String
   description  String
   videoUrl     String
